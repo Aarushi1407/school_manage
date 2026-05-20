@@ -34,7 +34,7 @@
                     </div>              
                     
                     <div class="form-group">
-                        <label>Choose File (PDF, Image, or Video) - (20 MB):</label>
+                        <label>Choose File (PDF, Image, or Video) - (40 MB):</label>
                         <input type="file" name="media_file" id="media_file" class="form-control" accept="application/pdf,image/*,video/mp4" {{ @$id>0 ? '' : 'required' }}>
                         @if(@$id>0)
                             @if(!empty(@$rs_record->file_path))

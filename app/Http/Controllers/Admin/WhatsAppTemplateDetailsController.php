@@ -62,7 +62,7 @@ class WhatsAppTemplateDetailsController extends Controller
                 'template_name' => 'required',
                 'language' => 'required',
                 'media_type' => 'required',
-                'media_file' => 'nullable|mimes:pdf,jpg,jpeg,png,mp4,doc,docx|max:20480' 
+                'media_file' => 'nullable|mimes:pdf,jpg,jpeg,png,mp4,doc,docx|max:40980' 
             ];
 
             $validator = Validator::make($request->all(),$rules);
