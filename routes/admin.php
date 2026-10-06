@@ -177,5 +177,13 @@ Route::group(['middleware' => ['preventBackHistory','admin','web']], function() 
 	    Route::post('mms-send', 'MarketingMessageController@send')->name('admin.marketing.message.send.send');
 	});
 
+	// dictionary
+	Route::group(['prefix' => 'dictionary'], function() {
+	    Route::get('dictionary-index', 'DictionaryController@index')->name('admin.dictionary.index');
+	    Route::get('fetchHindiName/{type?}', 'DictionaryController@fetchHindiName')->name('admin.dictionary.fetchHindiName');
+	    Route::get('correctHindiName/{type?}', 'DictionaryController@correctHindiName')->name('admin.dictionary.correctHindiName');
+	    Route::post('saveOrUpdateDictionary', 'DictionaryController@saveOrUpdateDictionary')->name('admin.dictionary.saveOrUpdateDictionary');
+	});
+
 	
  });
