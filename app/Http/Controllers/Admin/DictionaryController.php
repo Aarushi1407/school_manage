@@ -16,7 +16,7 @@ class DictionaryController extends Controller
     public function index()
     {
         try {
-            $permission_flag = MyFuncs::isPermission_route("36");
+            $permission_flag = MyFuncs::isPermission_route("17");
             if(!$permission_flag){
                 return view('admin.common.error');
             }
