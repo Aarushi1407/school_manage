@@ -226,7 +226,7 @@ class DictionaryController extends Controller
             $name_e = substr(MyFuncs::removeSpacialChr($request->name_e), 0, 100);
             $name_l = $request->name_e;
             
-            $query = "UPDATE `dictionary` set `name_e` = '$name_e', `name_l` = '$name_l' where `id` = $l_id limit 1;";            
+            $query = "UPDATE `dictionary` set `name_e` = '$name_e', `name_l` = '$name_l', `verified` = 1 where `id` = $l_id limit 1;";            
             $rs_update = DB::select(DB::raw($query));
             
 
