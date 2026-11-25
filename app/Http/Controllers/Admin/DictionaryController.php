@@ -175,4 +175,66 @@ class DictionaryController extends Controller
             return MyFuncs::Exception_error_handler($this->e_controller, $e_method, $e->getMessage());
         }
     }
+
+    public function verify_edit($id)
+    {
+        try {
+            $permission_flag = MyFuncs::isPermission_route(18);
+            if(!$permission_flag){
+                return view('admin.common.error_popup');
+            }
+            
+            $id = intval(Crypt::decrypt($id));
+            $rs_records = DB::select(DB::raw("SELECT * from `dictionary` where `id` = $id limit 1;"));
+            $rs_records = reset($house);    
+            return view('admin.dictionary.verify_edit',compact('rs_records', 'id'));
+        } catch (\Exception $e) {
+            $e_method = "verify_edit";
+            return MyFuncs::Exception_error_handler($this->e_controller, $e_method, $e->getMessage());
+        }
+    }
+
+    public function verify_save(Request $request, $id)
+    {  
+        try {
+            $permission_flag = MyFuncs::isPermission_route(18);
+            if(!$permission_flag){
+                $response=['status'=>0,'msg'=>'Something Went Wrong'];
+                return response()->json($response);
+            }
+            
+            $rules=[
+                'name_e' => 'required',
+                'name_l' => 'required',
+            ];
+
+            $customMessages = [
+                'name_e.required'=> 'Name (English) is Required',
+                'name_l.required'=> 'Name (Hindi) is Required',
+            ];
+
+            $validator = Validator::make($request->all(),$rules, $customMessages);
+            if ($validator->fails()) {
+                $errors = $validator->errors()->all();
+                $response=array();
+                $response["status"]=0;
+                $response["msg"]=$errors[0];
+                return response()->json($response);// response as json
+            }
+
+            $id = intval(Crypt::decrypt($id));
+            $name_e = substr(MyFuncs::removeSpacialChr($request->name_e), 0, 100);
+            $name_l = $request->name_e;
+            
+            $query = "UPDATE `dictionary` set `name_e` = '$name_e', `name_l` = '$name_l' where `id` = $l_id limit 1;";            
+            $rs_update = DB::select(DB::raw($query));
+            
+
+            $response=['status'=>1,'msg'=>'Updated Successfully'];
+            return response()->json($response);        
+        } catch (\Exception $e) {
+            $e_method = "verify_save";
+            return MyFuncs::Exception_error_handler($this->e_controller, $e_method, $e->getMessage());
+        }
+    }
 }

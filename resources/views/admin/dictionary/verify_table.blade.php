@@ -26,6 +26,8 @@
 
                                 <button type="button" class="btn btn-sm btn-danger" button-click="btn_show_dictionary" success-popup="true" onclick="callAjax(this,'{{ route('admin.dictionary.verify.delete', Crypt::encrypt($value->id)) }}')"> Delete</button>
 
+                                <button type="button" class="btn btn-info btn-sm" onclick="callPopupLarge(this,'{{ route('admin.dictionary.verify.edit',Crypt::encrypt($value->id)) }}')"><i class="fa fa-edit"></i> Edit</a>
+
                             </td>
 
                         </tr>

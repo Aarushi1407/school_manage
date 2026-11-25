@@ -190,6 +190,8 @@ Route::group(['middleware' => ['preventBackHistory','admin','web']], function() 
 	    Route::post('dictionary-verify-show', 'DictionaryController@verify_show')->name('admin.dictionary.verify.show');
 	    Route::get('dictionary-verify-update/{id}', 'DictionaryController@verify_update')->name('admin.dictionary.verify.update');
 	    Route::get('dictionary-verify-delete/{id}', 'DictionaryController@verify_delete')->name('admin.dictionary.verify.delete');
+	    Route::get('dictionary-verify-edit/{id}', 'DictionaryController@verify_edit')->name('admin.dictionary.verify.edit');
+	    Route::post('dictionary-verify-save/{id}', 'DictionaryController@verify_save')->name('admin.dictionary.verify.save');
 	    
 	});
 
