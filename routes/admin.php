@@ -185,5 +185,13 @@ Route::group(['middleware' => ['preventBackHistory','admin','web']], function() 
 	    Route::post('saveOrUpdateDictionary', 'DictionaryController@saveOrUpdateDictionary')->name('admin.dictionary.saveOrUpdateDictionary');
 	});
 
+	Route::group(['prefix' => 'dictionary-verify'], function() {
+	    Route::get('dictionary-verify-index', 'DictionaryController@verify_index')->name('admin.dictionary.verify.index');
+	    Route::post('dictionary-verify-show', 'DictionaryController@verify_show')->name('admin.dictionary.verify.show');
+	    Route::get('dictionary-verify-update/{id}', 'DictionaryController@verify_update')->name('admin.dictionary.verify.update');
+	    Route::get('dictionary-verify-delete/{id}', 'DictionaryController@verify_delete')->name('admin.dictionary.verify.delete');
+	    
+	});
+
 	
  });

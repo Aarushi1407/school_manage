@@ -91,4 +91,83 @@ class DictionaryController extends Controller
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
+
+
+    public function verify_index()
+    {
+        try {
+            $permission_flag = MyFuncs::isPermission_route("18");
+            if(!$permission_flag){
+                return view('admin.common.error');
+            }
+            return view('admin.dictionary.verify_index');            
+        } catch (\Exception $e) {$e_method = "verify_index";
+            return MyFuncs::Exception_error_handler($this->e_controller, $e_method,$e->getMessage());
+        }
+    }
+
+    public function verify_show(Request $request)
+    {
+        try {
+            $permission_flag = MyFuncs::isPermission_route(18);
+            if(!$permission_flag){
+                $response=['status'=>0,'msg'=>'Something Went Wrong'];
+                return response()->json($response);
+            }
+
+            $input_value = $request->input_value;
+
+            $rs_result = DB::select(DB::raw("SELECT * from `dictionary` where `name_e` = (select `name_e` from `dictionary` where `verified` = 0 limit 1) and `verified` = 0;"));
+
+            $response = array();
+            $response['status'] = 1;            
+            $response['data'] =view('admin.dictionary.verify_table', compact('rs_result'))->render();
+            return response()->json($response);           
+        } catch (Exception $e) {
+            $e_method = "verify_show";
+            return MyFuncs::Exception_error_handler($this->e_controller, $e_method, $e->getMessage());
+        }
+    }
+
+    public function verify_update($id)
+    {
+        try {
+            $permission_flag = MyFuncs::isPermission_route(18);
+            if(!$permission_flag){
+                $response=['status'=>0,'msg'=>'Something Went Wrong'];
+                return response()->json($response);
+            }
+
+            $l_id = intval(Crypt::decrypt($id));           
+            
+            $query = "UPDATE `dictionary` set `verified` = 1 where `id` = $l_id limit 1;";       
+            
+            $rs_records = DB::select(DB::raw("$query"));
+            $response=['status'=>1,'msg'=>'Verified Successfully'];
+            return response()->json($response);
+        } catch (\Exception $e) {
+            $e_method = "verify_update";
+            return MyFuncs::Exception_error_handler($this->e_controller, $e_method, $e->getMessage());
+        }
+    }
+
+    public function verify_delete($id)
+    {
+        try {
+            $permission_flag = MyFuncs::isPermission_route(18);
+            if(!$permission_flag){
+                $response=['status'=>0,'msg'=>'Something Went Wrong'];
+                return response()->json($response);
+            }
+
+            $l_id = intval(Crypt::decrypt($id));            
+            $query = "UPDATE `dictionary` set `verified` = 2 where `id` = $l_id limit 1;";       
+            $rs_records = DB::select(DB::raw("$query"));
+            $response=['status'=>1,'msg'=>'Deleted Successfully'];
+            return response()->json($response);
+        } catch (\Exception $e) {
+            $e_method = "verify_delete";
+            return MyFuncs::Exception_error_handler($this->e_controller, $e_method, $e->getMessage());
+        }
+    }
 }
