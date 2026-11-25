@@ -222,7 +222,7 @@ class DictionaryController extends Controller
                 return response()->json($response);// response as json
             }
 
-            $id = intval(Crypt::decrypt($id));
+            $l_id = intval(Crypt::decrypt($id));
             $name_e = substr(MyFuncs::removeSpacialChr($request->name_e), 0, 100);
             $name_l = $request->name_e;
             
