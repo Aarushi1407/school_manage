@@ -122,7 +122,7 @@ class DictionaryController extends Controller
                 $condition = " and `name_e` like '$input_value%' ";
             }
 
-            $rs_result = DB::select(DB::raw("SELECT * from `dictionary` where `name_e` = (select `name_e` from `dictionary` where `verified` = 0 $condition limit 1) order by `verified`;"));
+            $rs_result = DB::select(DB::raw("SELECT * from `dictionary` where `name_e` = (select `name_e` from `dictionary` where `verified` = 0 $condition limit 1) order by `verified`, `id`;"));
 
             $response = array();
             $response['status'] = 1;            
