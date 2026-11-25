@@ -224,7 +224,7 @@ class DictionaryController extends Controller
 
             $l_id = intval(Crypt::decrypt($id));
             $name_e = substr(MyFuncs::removeSpacialChr($request->name_e), 0, 100);
-            $name_l = $request->name_e;
+            $name_l = $request->name_l;
             
             $query = "UPDATE `dictionary` set `name_e` = '$name_e', `name_l` = '$name_l', `verified` = 1 where `id` = $l_id limit 1;";            
             $rs_update = DB::select(DB::raw($query));
