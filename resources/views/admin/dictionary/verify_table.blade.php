@@ -20,12 +20,11 @@
                             <td>{{ $value->name_e }}</td>
                             <td>{{ $value->name_l }}</td>
                             <td>
-                                {{-- @if($value->verified == 0) --}}
-                                    <button type="button" class="btn btn-sm btn-success" button-click="btn_show_dictionary" success-popup="true" onclick="if (confirm('Are you sure you want to verify this dictionary entry?')) {callAjax(this,'{{ route('admin.dictionary.verify.update', Crypt::encrypt($value->id)) }}')}else{console_Log('cancel')}"> Verify</button>
-                                {{-- @else --}}
+                                @if($value->verified == 0)
+                                    <button type="button" class="btn btn-sm btn-success" button-click="btn_show_dictionary" success-popup="true" onclick="callAjax(this,'{{ route('admin.dictionary.verify.update', Crypt::encrypt($value->id)) }}')"> Verify</button>
+                                @endif
 
-                                    <button type="button" class="btn btn-sm btn-danger" button-click="btn_show_dictionary" success-popup="true" onclick="if (confirm('Are you sure you want to delete this dictionary entry?')) {callAjax(this,'{{ route('admin.dictionary.verify.delete', Crypt::encrypt($value->id)) }}')} else {console_Log('cancel')}"> Delete</button>
-                                {{-- @endif --}}
+                                <button type="button" class="btn btn-sm btn-danger" button-click="btn_show_dictionary" success-popup="true" onclick="callAjax(this,'{{ route('admin.dictionary.verify.delete', Crypt::encrypt($value->id)) }}')"> Delete</button>
 
                             </td>
 

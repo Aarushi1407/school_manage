@@ -115,9 +115,14 @@ class DictionaryController extends Controller
                 return response()->json($response);
             }
 
-            $input_value = $request->input_value;
+            $input_value = MyFuncs::removeSpacialChr($request->input_value);
 
-            $rs_result = DB::select(DB::raw("SELECT * from `dictionary` where `name_e` = (select `name_e` from `dictionary` where `verified` = 0 limit 1) and `verified` = 0;"));
+            $condition = "";
+            if($input_value != ''){
+                $condition = " and `name_e` like '$input_value%' ";
+            }
+
+            $rs_result = DB::select(DB::raw("SELECT * from `dictionary` where `name_e` = (select `name_e` from `dictionary` where `verified` = 0 $condition limit 1) order by `verified`;"));
 
             $response = array();
             $response['status'] = 1;            
@@ -161,7 +166,7 @@ class DictionaryController extends Controller
             }
 
             $l_id = intval(Crypt::decrypt($id));            
-            $query = "UPDATE `dictionary` set `verified` = 2 where `id` = $l_id limit 1;";       
+            $query = "DELETE from `dictionary` where `id` = $l_id limit 1;";       
             $rs_records = DB::select(DB::raw("$query"));
             $response=['status'=>1,'msg'=>'Deleted Successfully'];
             return response()->json($response);
