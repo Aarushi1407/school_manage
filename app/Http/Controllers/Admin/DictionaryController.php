@@ -186,7 +186,7 @@ class DictionaryController extends Controller
             
             $id = intval(Crypt::decrypt($id));
             $rs_records = DB::select(DB::raw("SELECT * from `dictionary` where `id` = $id limit 1;"));
-            $rs_records = reset($house);    
+            $rs_records = reset($rs_records);    
             return view('admin.dictionary.verify_edit',compact('rs_records', 'id'));
         } catch (\Exception $e) {
             $e_method = "verify_edit";
