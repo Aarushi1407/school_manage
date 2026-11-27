@@ -298,4 +298,30 @@ class ApiController extends Controller
         }, 200, $headers);
     }
 
+
+    public function get_school_code($code)
+    {
+        $school = DB::select(
+            "SELECT code, name, url
+             FROM admin_school_information
+             WHERE code = ?
+             LIMIT 1",
+            [$code]
+        );
+
+        $school = reset($school) ?: null;
+
+        if (!$school) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid School Code'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'school' => $school
+        ]);
+    }
+
 }
