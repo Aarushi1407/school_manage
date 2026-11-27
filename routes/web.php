@@ -26,7 +26,11 @@ Route::get('getvideo/{chapter_id}', 'Admin\ApiController@getvideo')->name('admin
 Route::get('viewvideo/stream/{id}/{token}', 'Admin\ApiController@strem_video')->name('admin.viewvideo.stream');
 
 Route::get('/pdf/proxy/{enc}', 'Admin\ApiController@show')
-    ->name('pdf.proxy');
+
+
+Route::get('/school/{code}', 'Admin\ApiController@get_school_code')->name('get.school.code');
+
+
 
 
 
